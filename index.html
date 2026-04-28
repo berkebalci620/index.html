@@ -1,163 +1,104 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Adli Kimya Oyunu</title>
-
-<style>
-body {
-  margin:0;
-  font-family: Arial;
-  background: linear-gradient(to right, #141e30, #243b55);
-  color:white;
-  text-align:center;
-}
-
-h1 { font-size:22px; }
-
-.lab {
-  display:flex;
-  flex-wrap:wrap;
-  justify-content:center;
-  gap:10px;
-  margin-top:15px;
-}
-
-.item {
-  background:white;
-  color:black;
-  border-radius:10px;
-  padding:8px;
-  width:80px;
-  font-size:12px;
-}
-
-.item img { width:40px; }
-
-.buttons {
-  margin-top:15px;
-}
-
-button {
-  padding:10px;
-  margin:5px;
-  border:none;
-  border-radius:10px;
-  font-size:14px;
-  width:120px;
-}
-
-.water { background:#3498db; }
-.magnet { background:#e74c3c; }
-.filter { background:#f1c40f; color:black; }
-.evaporate { background:#2ecc71; }
-
-.detective img { width:80px; }
-
-.card {
-  background:white;
-  color:black;
-  margin:15px;
-  padding:10px;
-  border-radius:10px;
-  font-size:14px;
-}
-
-.success { border-left:6px solid green; }
-.error { border-left:6px solid red; }
-
-.progress {
-  font-size:14px;
-}
-</style>
+    <meta charset="UTF-8">
+    <title>Mikroçip Vakası: Adli Kimya Laboratuvarı</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #fdfdf5; color: #1a3a5f; display: flex; flex-direction: column; align-items: center; padding: 20px; }
+        .header { text-align: center; margin-bottom: 20px; border-bottom: 2px solid #1a3a5f; width: 80%; padding-bottom: 10px; }
+        .container { background: white; padding: 30px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); max-width: 600px; width: 100%; text-align: center; }
+        .maddeler { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 30px; }
+        .madde { border: 1px solid #ddd; padding: 10px; border-radius: 8px; background: #f9f9f9; }
+        .madde span { font-size: 30px; display: block; margin-bottom: 5px; }
+        .butonlar { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; }
+        button { padding: 15px; border: none; border-radius: 8px; cursor: pointer; color: white; font-weight: bold; transition: 0.3s; font-size: 16px; }
+        .btn-miknatis { background-color: #e74c3c; }
+        .btn-su { background-color: #3498db; }
+        .btn-filtre { background-color: #f1c40f; color: #1a3a5f; }
+        .btn-isi { background-color: #27ae60; }
+        button:hover { opacity: 0.8; transform: translateY(-2px); }
+        #feedback { margin-top: 25px; padding: 15px; border-radius: 8px; min-height: 50px; font-weight: 500; line-height: 1.4; }
+        .error { background-color: #fadbd8; color: #c0392b; border: 1px solid #e74c3c; }
+        .success { background-color: #d4efdf; color: #1e8449; border: 1px solid #27ae60; }
+        .step-counter { margin-top: 20px; font-size: 14px; color: #7f8c8d; }
+    </style>
 </head>
-
 <body>
 
-<h1>🕵️ Adli Kimya Oyunu</h1>
-
-<div class="lab">
-  <div class="item"><img src="https://cdn-icons-png.flaticon.com/512/2913/2913465.png"><br>Demir</div>
-  <div class="item"><img src="https://cdn-icons-png.flaticon.com/512/2909/2909763.png"><br>Talaş</div>
-  <div class="item"><img src="https://cdn-icons-png.flaticon.com/512/427/427735.png"><br>Kum</div>
-  <div class="item"><img src="https://cdn-icons-png.flaticon.com/512/1046/1046784.png"><br>Tuz</div>
+<div class="header">
+    <h1>🕵️‍♂️ Mikroçip Vakası</h1>
+    <p>Adli Tıp Laboratuvarı: Ayrıştırma Algoritması</p>
 </div>
 
-<div class="buttons">
-  <button class="magnet" onclick="step('magnet')">🧲 Mıknatıs</button>
-  <button class="water" onclick="step('water')">💧 Su</button>
-  <button class="filter" onclick="step('filter')">🧻 Filtre</button>
-  <button class="evaporate" onclick="step('evaporate')">☀️ Buharlaştır</button>
-</div>
+<div class="container">
+    <div class="maddeler">
+        <div class="madde"><span>🔩</span>Demir</div>
+        <div class="madde"><span>🪵</span>Talaş</div>
+        <div class="madde"><span>⏳</span>Kum</div>
+        <div class="madde"><span>🧂</span>Tuz</div>
+    </div>
 
-<div class="detective">
-  <img src="https://cdn-icons-png.flaticon.com/512/1995/1995574.png">
-  <p id="text">Başlayalım... dikkatli olmalıyız.</p>
-</div>
+    <div class="butonlar">
+        <button class="btn-miknatis" onclick="hamle(1)">🧲 Mıknatıslama</button>
+        <button class="btn-su" onclick="hamle(2)">💧 Su Ekleme</button>
+        <button class="btn-filtre" onclick="hamle(3)">☕ Süzme (Filtre)</button>
+        <button class="btn-isi" onclick="hamle(4)">🔥 Buharlaştırma</button>
+    </div>
 
-<div id="card" class="card">İlk adımı seç!</div>
-<div class="progress" id="progress">Adım: 0 / 4</div>
+    <div id="feedback">Analiz için bir araç seçiniz...</div>
+    <div class="step-counter">Tamamlanan Adım: <span id="step">0</span> / 4</div>
+</div>
 
 <script>
-let state = 0;
+    let currentStep = 0;
+    const feedback = document.getElementById('feedback');
+    const stepDisplay = document.getElementById('step');
 
-function step(action){
-  let text = document.getElementById("text");
-  let card = document.getElementById("card");
-  let progress = document.getElementById("progress");
-
-  if(state === 0){
-    if(action === "magnet"){
-      text.innerHTML = "Doğru! Demiri ayırdık.";
-      card.innerHTML = "✅ Demir mıknatısla ayrıldı.";
-      card.className="card success";
-      state++;
-    } else {
-      text.innerHTML = "Yanlış hamle!";
-      card.innerHTML = "❌ Önce mıknatıs kullanmalısın.";
-      card.className="card error";
+    function hamle(secim) {
+        if (currentStep === 0) {
+            if (secim === 1) {
+                basari("ADIM 1: Başarılı! Demir tozları kuruyken manyetizma ile ayrıldı. Saf delil korundu.");
+                currentStep = 1;
+            } else if (secim === 2) {
+                hata("KRİTİK HATA: Önce su eklediniz! Demir tozları ıslandı ve oksitlenme (paslanma) başladı. Kimyasal değişim sebebiyle saf delil özelliğini yitirdin!");
+            } else {
+                hata("HATA: Henüz karışım katı halde. Bu aracı kullanmak delilleri bozabilir.");
+            }
+        } else if (currentStep === 1) {
+            if (secim === 2) {
+                basari("ADIM 2: Su eklendi. Talaşlar yoğunluk farkıyla yüzeye çıktı, tuz çözünmeye başladı.");
+                currentStep = 2;
+            } else {
+                hata("HATA: Demir ayrıldıktan sonra karışımı sıvı faza geçirmelisiniz.");
+            }
+        } else if (currentStep === 2) {
+            if (secim === 3) {
+                basari("ADIM 3: Süzme yapıldı. Çözünmeyen kum filtrede kaldı, tuzlu su ayrıldı.");
+                currentStep = 3;
+            } else {
+                hata("HATA: Önce katı parçacıkları (kum) sıvı fazdan ayırmanız gerekiyor.");
+            }
+        } else if (currentStep === 3) {
+            if (secim === 4) {
+                basari("VAKA ÇÖZÜLDÜ! Su buharlaştı, saf yemek tuzu kristalleşti. Tüm deliller %100 saflıkla kurtarıldı.");
+                currentStep = 4;
+            } else {
+                hata("HATA: Final adımı olarak çözünmüş maddeyi (tuz) geri kazanmalısınız.");
+            }
+        }
+        stepDisplay.innerText = currentStep;
     }
-  }
 
-  else if(state === 1){
-    if(action === "water"){
-      text.innerHTML = "Güzel! Tuz çözüldü.";
-      card.innerHTML = "✅ Su ile tuz çözüldü.";
-      card.className="card success";
-      state++;
-    } else {
-      card.innerHTML = "❌ Şimdi su eklemelisin.";
-      card.className="card error";
+    function hata(mesaj) {
+        feedback.innerText = mesaj;
+        feedback.className = "error";
+        currentStep = 0; // Hata yapınca başa döner (Pedagojik disiplin)
     }
-  }
 
-  else if(state === 2){
-    if(action === "filter"){
-      text.innerHTML = "Harika!";
-      card.innerHTML = "✅ Kum ve talaş ayrıldı.";
-      card.className="card success";
-      state++;
-    } else {
-      card.innerHTML = "❌ Filtreleme yapmalısın.";
-      card.className="card error";
+    function basari(mesaj) {
+        feedback.innerText = mesaj;
+        feedback.className = "success";
     }
-  }
-
-  else if(state === 3){
-    if(action === "evaporate"){
-      text.innerHTML = "Görev tamam!";
-      card.innerHTML = "🎉 Hepsi ayrıldı!";
-      card.className="card success";
-      state++;
-    } else {
-      card.innerHTML = "❌ Son adım buharlaştırma.";
-      card.className="card error";
-    }
-  }
-
-  progress.innerHTML = "Adım: " + state + " / 4";
-}
 </script>
 
 </body>
