@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Adli Kimya Oyunu</title>
+
+<style>
+body {
+  margin:0;
+  font-family: Arial;
+  background: linear-gradient(to right, #141e30, #243b55);
+  color:white;
+  text-align:center;
+}
+
+h1 { font-size:22px; }
+
+.lab {
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:10px;
+  margin-top:15px;
+}
+
+.item {
+  background:white;
+  color:black;
+  border-radius:10px;
+  padding:8px;
+  width:80px;
+  font-size:12px;
+}
+
+.item img { width:40px; }
+
+.buttons {
+  margin-top:15px;
+}
+
+button {
+  padding:10px;
+  margin:5px;
+  border:none;
+  border-radius:10px;
+  font-size:14px;
+  width:120px;
+}
+
+.water { background:#3498db; }
+.magnet { background:#e74c3c; }
+.filter { background:#f1c40f; color:black; }
+.evaporate { background:#2ecc71; }
+
+.detective img { width:80px; }
+
+.card {
+  background:white;
+  color:black;
+  margin:15px;
+  padding:10px;
+  border-radius:10px;
+  font-size:14px;
+}
+
+.success { border-left:6px solid green; }
+.error { border-left:6px solid red; }
+
+.progress {
+  font-size:14px;
+}
+</style>
+</head>
+
+<body>
+
+<h1>🕵️ Adli Kimya Oyunu</h1>
+
+<div class="lab">
+  <div class="item"><img src="https://cdn-icons-png.flaticon.com/512/2913/2913465.png"><br>Demir</div>
+  <div class="item"><img src="https://cdn-icons-png.flaticon.com/512/2909/2909763.png"><br>Talaş</div>
+  <div class="item"><img src="https://cdn-icons-png.flaticon.com/512/427/427735.png"><br>Kum</div>
+  <div class="item"><img src="https://cdn-icons-png.flaticon.com/512/1046/1046784.png"><br>Tuz</div>
+</div>
+
+<div class="buttons">
+  <button class="magnet" onclick="step('magnet')">🧲 Mıknatıs</button>
+  <button class="water" onclick="step('water')">💧 Su</button>
+  <button class="filter" onclick="step('filter')">🧻 Filtre</button>
+  <button class="evaporate" onclick="step('evaporate')">☀️ Buharlaştır</button>
+</div>
+
+<div class="detective">
+  <img src="https://cdn-icons-png.flaticon.com/512/1995/1995574.png">
+  <p id="text">Başlayalım... dikkatli olmalıyız.</p>
+</div>
+
+<div id="card" class="card">İlk adımı seç!</div>
+<div class="progress" id="progress">Adım: 0 / 4</div>
+
+<script>
+let state = 0;
+
+function step(action){
+  let text = document.getElementById("text");
+  let card = document.getElementById("card");
+  let progress = document.getElementById("progress");
+
+  if(state === 0){
+    if(action === "magnet"){
+      text.innerHTML = "Doğru! Demiri ayırdık.";
+      card.innerHTML = "✅ Demir mıknatısla ayrıldı.";
+      card.className="card success";
+      state++;
+    } else {
+      text.innerHTML = "Yanlış hamle!";
+      card.innerHTML = "❌ Önce mıknatıs kullanmalısın.";
+      card.className="card error";
+    }
+  }
+
+  else if(state === 1){
+    if(action === "water"){
+      text.innerHTML = "Güzel! Tuz çözüldü.";
+      card.innerHTML = "✅ Su ile tuz çözüldü.";
+      card.className="card success";
+      state++;
+    } else {
+      card.innerHTML = "❌ Şimdi su eklemelisin.";
+      card.className="card error";
+    }
+  }
+
+  else if(state === 2){
+    if(action === "filter"){
+      text.innerHTML = "Harika!";
+      card.innerHTML = "✅ Kum ve talaş ayrıldı.";
+      card.className="card success";
+      state++;
+    } else {
+      card.innerHTML = "❌ Filtreleme yapmalısın.";
+      card.className="card error";
+    }
+  }
+
+  else if(state === 3){
+    if(action === "evaporate"){
+      text.innerHTML = "Görev tamam!";
+      card.innerHTML = "🎉 Hepsi ayrıldı!";
+      card.className="card success";
+      state++;
+    } else {
+      card.innerHTML = "❌ Son adım buharlaştırma.";
+      card.className="card error";
+    }
+  }
+
+  progress.innerHTML = "Adım: " + state + " / 4";
+}
+</script>
+
+</body>
+</html>
